@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot name="mybot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<gazebo reference="LOI">
+	  <material>Gazebo/wood</material>
+	  <selfCollide>true</selfCollide>
+	</gazebo>
+	<gazebo reference="LOII">
+	  <material>Gazebo/wood</material>
+	  <selfCollide>true</selfCollide>
+	</gazebo>
+	<gazebo reference="LOIII">
+	  <material>Gazebo/wood</material>
+	  <selfCollide>true</selfCollide>
+	</gazebo>
+	<gazebo reference="LOIV">
+	  <material>Gazebo/wood</material>
+	  <selfCollide>true</selfCollide>
+	</gazebo>
+	<gazebo reference="LinkA">
+	  <material>Gazebo/wood</material>
+ 	  <selfCollide>true</selfCollide>
+	</gazebo>
+	<gazebo reference="LinkB">
+	  <material>Gazebo/wood</material>
+	  <selfCollide>true</selfCollide>
+	</gazebo>
+	<gazebo reference="ROIV">
+	  <material>Gazebo/wood</material>
+	  <selfCollide>true</selfCollide>
+	</gazebo>
+	<gazebo reference="ROIII">
+	  <material>Gazebo/wood</material>
+	  <selfCollide>true</selfCollide>
+	</gazebo>
+	<gazebo reference="ROII">
+	  <material>Gazebo/wood</material>
+	  <selfCollide>true</selfCollide>
+	</gazebo>
+	<gazebo reference="ROI">
+	  <material>Gazebo/wood</material>
+	  <selfCollide>true</selfCollide>
+	</gazebo>
+	<gazebo>
+	  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+	    <robotNamespace>/mybot</robotNamespace>
+	  </plugin>
+  
+	</gazebo>
+</robot>

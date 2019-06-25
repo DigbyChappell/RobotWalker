@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+	<world name="myworld">
+		<include>
+			<uri>model://sun</uri>
+		</include>
+		<include>
+			<uri>model://ground_plane</uri>
+		</include>
+		<physics type='quick'>
+			<real_time_update_rate>0.000000</real_time_update_rate>
+			<max_step_size>0.0003</max_step_size>
+		</physics>
+		<model name ='box'>
+			<pose>-0.5 0 0.025 0 0 0</pose>
+			<link name ='0.05x10x0.05'>
+				<pose>0 0 0 0 0 0</pose>
+				<collision name ='collision'>
+					<geometry>
+						<box><size>0.05 10 0.05</size></box>
+					</geometry>
+				</collision>
+				<visual name ='visual'>
+					<geometry>
+						<box><size>0.05 10 0.05</size></box>
+					</geometry>
+				</visual>
+				<inertial>
+					<mass value="1000"/>
+				</inertial> 
+			</link>
+		</model>
+		<model name = 'goal'>
+			<pose>-1 0 0.001 0 0 0</pose>
+			<link name ='goal'>
+				<pose>0 0 0 0 0 0</pose>
+				<collision name ='collision'>
+					<geometry>
+						<box><size>0.001 10 0.002</size></box>
+					</geometry>
+				</collision>
+				<visual name ='visual'>
+					<geometry>
+						<box><size>0.001 10 0.002</size></box>
+					</geometry>
+				</visual>
+				<inertial>
+					<mass value="1000"/>
+				</inertial> 
+			</link>
+			<joint name="f1" type="fixed">
+				<parent link="base"/>
+				<child link="top"/>
+			</joint>  
+		</model>
+	</world>
+</sdf>

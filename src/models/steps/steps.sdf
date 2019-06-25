@@ -1,0 +1,59 @@
+<?xml version='1.0'?>
+<sdf version ='1.5'>
+  <model name ='box'>
+    <pose>0 -0.3 0 0 0 0</pose>
+    <link name ='base'>
+      <pose>0 -0.5 0 0 0 0</pose>
+      <collision name ='collision'>
+        <geometry>
+          <box><size>1 0.4 0.05</size></box>
+        </geometry>
+      </collision>
+      <visual name ='visual'>
+        <geometry>
+          <box><size>1 0.4 0.05</size></box>
+        </geometry>
+      </visual>
+      <inertial>
+	<mass value="100"/>
+      </inertial> 
+      <surface>
+        <friction>
+          <ode>
+	    <mu>1000</mu>
+	    <mu2>1000</mu2>
+          </ode>
+        </friction>
+      </surface>
+    </link>
+    <link name ='top'>
+      <pose>0 -0.55 0 0 0 0</pose>
+      <collision name ='collision'>
+        <geometry>
+          <box><size>1 0.3 0.05</size></box>
+        </geometry>
+      </collision>
+      <visual name ='visual'>
+        <geometry>
+          <box><size>1 0.3 0.05</size></box>
+        </geometry>
+      </visual>
+      <inertial>
+	<mass value="100"/>
+      </inertial> 
+      <surface>
+        <friction>
+          <ode>
+	    <mu>1000</mu>
+	    <mu2>1000</mu2>
+          </ode>
+        </friction>
+      </surface>
+    </link>
+
+  <joint name="f1" type="fixed">
+    <parent link="base"/>
+    <child link="top"/>
+  </joint>
+  </model>
+</sdf>

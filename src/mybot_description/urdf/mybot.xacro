@@ -1,0 +1,415 @@
+<?xml version="1.0"?>
+<robot name="mybot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+        <!-- Put here the robot description -->
+
+	<xacro:property name="PI" value="3.1415926535897931"/>
+
+	<xacro:property name="thickness" value="0.006"/>
+	<xacro:property name="width" value="0.025"/>
+
+	<xacro:property name="oi" value="0.175"/>
+	<xacro:property name="loiv" value="0.145"/>
+	<xacro:property name="roiv" value="0.140"/>
+	<xacro:property name="oiii" value="0.125"/>
+	<xacro:property name="link" value="0.175"/>
+
+	<xacro:property name="moffset" value="0.010"/>
+	<xacro:property name="coffset" value="0.015"/>
+
+	<xacro:property name="oiMass" value="0.022"/>
+	<xacro:property name="oiiMass" value="0.022"/>
+	<xacro:property name="oiiiMass" value="0.016"/>
+	<xacro:property name="loivMass" value="0.021"/>
+	<xacro:property name="roivMass" value="0.059"/>
+	<xacro:property name="linkAMass" value="0.105"/>
+	<xacro:property name="linkBMass" value="0.067"/>
+
+	<xacro:property name="r1ll" value="0.65"/>
+	<xacro:property name="r1l_" value="0.18"/>
+	<xacro:property name="r2ll" value="0.15"/>
+	<xacro:property name="r2l_" value="0.7"/>
+	<xacro:property name="r3ll" value="0.72"/>
+	<xacro:property name="r3l_" value="0.15"/>
+
+	<xacro:property name="cameraSize" value="0.05"/>
+	<xacro:property name="cameraMass" value="0.1"/>
+
+	<xacro:arg name="gui" default="true"/>
+
+	<xacro:include filename="$(find mybot_description)/urdf/mybot.gazebo" />
+	<xacro:include filename="$(find mybot_description)/urdf/materials.xacro" />
+	<xacro:include filename="$(find mybot_description)/urdf/macros.xacro" />
+
+	<link name='LOI'>
+	  <collision> 
+	    <origin xyz="${width+oi/2} ${width/2-oiii/2} ${thickness/2}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${oi} ${width} ${thickness}"/> 
+	    </geometry> 
+	  </collision>
+	  <visual> 
+	    <origin xyz="${width+oi/2} ${width/2-oiii/2} ${thickness/2}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${oi} ${width} ${thickness}"/> 
+	    </geometry> 
+	    <material name="wood"/>
+	  </visual>
+	  <inertial> 
+	    <origin xyz="${width+oi/2} ${width/2-oiii/2} ${thickness/2}" rpy="0 0 0"/> 
+	    <mass value="${oiMass}"/> 
+	    <box_inertia m="${oiMass}" x="${oi}" y="${width}" z="${thickness}"/>
+	  </inertial>
+	  <surface>
+	    <friction>
+	      <ode>
+		<mu>0.3</mu>
+		<mu2>0.3</mu2>
+	      </ode>
+	    </friction>
+	  </surface>
+	</link>
+
+	<link name='LOII'>
+	  <collision> 
+	    <origin xyz="${width + oi/2} ${oiii/2-width/2} ${thickness/2}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${oi} ${width} ${thickness}"/> 
+	    </geometry> 
+	  </collision>
+	  <visual> 
+	    <origin xyz="${width + oi/2} ${oiii/2-width/2} ${thickness/2}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${oi} ${width} ${thickness}"/> 
+	    </geometry> 
+	    <material name="wood"/>
+	  </visual>
+	  <inertial> 
+	    <origin xyz="${width + oi/2} ${oiii/2-width/2} ${thickness/2}" rpy="0 0 0"/>  
+	    <mass value="${oiiMass}"/> 
+	    <box_inertia m="${oiiMass}" x="${oi}" y="${width}" z="${thickness}"/>
+	  </inertial>
+	  <surface>
+	    <friction>
+	      <ode>
+		<mu>0.3</mu><mu2>0.3</mu2>
+	      </ode>
+	    </friction>
+	  </surface>
+	</link>
+
+	<link name='LOIII'>
+	  <collision> 
+	    <origin xyz="${width/2} 0 ${thickness/2}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${width} ${oiii} ${thickness}"/> 
+	    </geometry> 
+	  </collision>
+	  <visual> 
+	    <origin xyz="${width/2} 0 ${thickness/2}" rpy="0 0 0"/>  
+	    <geometry> 
+	      <box size="${width} ${oiii} ${thickness}"/>  
+	    </geometry> 
+	    <material name="wood"/>
+	  </visual>
+	  <inertial> 
+	    <origin xyz="${width/2} 0 ${thickness/2}" rpy="0 0 0"/>  
+	    <mass value="${oiiiMass}"/> 
+	    <box_inertia m="${oiiiMass}" x="${width}" y="${oiii}" z="${thickness}"/>
+	  </inertial>
+	  <surface>
+	    <friction>
+	      <ode>
+		<mu>0.3</mu>
+		<mu2>0.3</mu2>
+	      </ode>
+	    </friction>
+	  </surface>
+	</link>
+
+	<link name='LOIV'>
+	  <collision> 
+	    <origin xyz="${width/2} 0 ${thickness + loiv/2}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${width} ${thickness} ${loiv}"/> 
+	    </geometry> 
+	  </collision>
+	  <visual> 
+	    <origin xyz="${width/2} 0 ${thickness + loiv/2}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${width} ${thickness} ${loiv}"/> 
+	    </geometry> 
+	    <material name="wood"/>
+	  </visual>
+	  <inertial> 
+	    <origin xyz="${width/2} 0 ${thickness + loiv/2}" rpy="0 0 0"/>
+	    <mass value="${loivMass}"/> 
+	    <box_inertia m="${loivMass}" x="${width}" y="${thickness}" z="${loiv}"/>
+	  </inertial>
+	  <surface>
+	    <friction>
+	      <ode>
+		<mu>0.3</mu>
+		<mu2>0.3</mu2>
+	      </ode>
+	    </friction>
+	  </surface>
+	</link>
+
+	<link name='LinkA'>
+	  <collision> 
+	    <origin xyz="0 0 ${link/2-coffset}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${width} ${thickness} ${link}"/> 
+	    </geometry> 
+	  </collision>
+	  <visual> 
+	    <origin xyz="0 0 ${link/2-coffset}" rpy="0 0 0"/>  
+	    <geometry> 
+	      <box size="${width} ${thickness} ${link}"/> 
+	    </geometry> 
+	    <material name="wood"/>
+	  </visual>
+	  <inertial> 
+	    <origin xyz="0 0 ${link/2-coffset}" rpy="0 0 0"/> 
+	    <mass value="${linkAMass}"/> 
+	    <box_inertia m="${linkAMass}" x="${width}" y="${thickness}" z="${link}"/>
+	  </inertial>
+	  <surface>
+	    <friction>
+	      <ode>
+		<mu>0.3</mu>
+		<mu2>0.3</mu2>
+	      </ode>
+	    </friction>
+	  </surface>
+	</link>
+
+	<link name='LinkB'>
+	  <collision> 
+	    <origin xyz="0 0 ${link/2-coffset}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${width} ${thickness} ${link}"/> 
+	    </geometry> 
+	  </collision>
+	  <visual> 
+	    <origin xyz="0 0 ${link/2-coffset}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${width} ${thickness} ${link}"/> 
+	    </geometry> 
+	    <material name="wood"/>
+	  </visual>
+	  <inertial> 
+	    <origin xyz="0 0 ${link/2-coffset}" rpy="0 0 0"/>  
+	    <mass value="${linkBMass}"/> 
+	    <box_inertia m="${linkBMass}" x="${width}" y="${thickness}" z="${link}"/>
+	  </inertial>
+	  <surface>
+	    <friction>
+	      <ode>
+		<mu>0.3</mu>
+		<mu2>0.3</mu2>
+	      </ode>
+	    </friction>
+	  </surface>
+	</link>
+
+	<link name='ROIV'>
+	  <collision> 
+	    <origin xyz="0 0 ${roiv/2-coffset}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${width} ${thickness} ${roiv}"/> 
+	    </geometry> 
+	  </collision>
+	  <visual> 
+	    <origin xyz="0 0 ${roiv/2-coffset}" rpy="0 0 0"/>  
+	    <geometry> 
+	      <box size="${width} ${thickness} ${roiv}"/> 
+	    </geometry> 
+	    <material name="wood"/>
+	  </visual>
+	  <inertial> 
+	    <origin xyz="0 0 ${roiv/2-coffset}" rpy="0 0 0"/> 
+	    <mass value="${roivMass}"/> 
+	    <box_inertia m="${roivMass}" x="${width}" y="${thickness}" z="${link}"/>
+	  </inertial>
+	  <surface>
+	    <friction>
+	      <ode>
+		<mu>0.3</mu>
+		<mu2>0.3</mu2>
+	      </ode>
+	    </friction>
+	  </surface>
+	</link>
+
+	<link name='ROIII'>
+	  <collision> 
+	    <origin xyz="0 0 ${thickness/2-coffset+roiv}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${width} ${oiii} ${thickness}"/> 
+	    </geometry> 
+	  </collision>
+	  <visual> 
+	    <origin xyz="0 0 ${thickness/2-coffset+roiv}" rpy="0 0 0"/>  
+	    <geometry> 
+	      <box size="${width} ${oiii} ${thickness}"/> 
+	    </geometry> 
+	    <material name="wood"/>
+	  </visual>
+	  <inertial> 
+	    <origin xyz="0 0 ${thickness/2-coffset+roiv}" rpy="0 0 0"/> 
+	    <mass value="${oiiiMass}"/> 
+	    <box_inertia m="${oiiiMass}" x="${width}" y="${oiii}" z="${thickness}"/>
+	  </inertial>
+	  <surface>
+	    <friction>
+	      <ode>
+		<mu>0.3</mu>
+		<mu2>0.3</mu2>
+	      </ode>
+	    </friction>
+	  </surface>
+	</link>
+
+	<link name='ROII'>
+	  <collision> 
+	    <origin xyz="${width/2 + oi/2} ${width/2} ${thickness/2-coffset+roiv}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${oi} ${width} ${thickness}"/> 
+	    </geometry> 
+	  </collision>
+	  <visual> 
+	    <origin xyz="${width/2 + oi/2} ${width/2} ${thickness/2-coffset+roiv}" rpy="0 0 0"/>  
+	    <geometry> 
+	      <box size="${oi} ${width} ${thickness}"/> 
+	    </geometry> 
+	    <material name="wood"/>
+	  </visual>
+	  <inertial> 
+	    <origin xyz="${width/2 + oi/2} ${width/2} ${thickness/2-coffset+roiv}" rpy="0 0 0"/>  
+	    <mass value="${oiiMass}"/> 
+	    <box_inertia m="${oiiMass}" x="${oi}" y="${width}" z="${thickness}"/>
+	  </inertial>
+	  <surface>
+	    <friction>
+	      <ode>
+		<mu>0.3</mu>
+		<mu2>0.3</mu2>
+	      </ode>
+	    </friction>
+	  </surface>
+	</link>
+
+	<link name='ROI'>
+	  <collision> 
+	    <origin xyz="${width/2 + oi/2} ${-width/2} ${thickness/2-coffset+roiv}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${oi} ${width} ${thickness}"/> 
+	    </geometry> 
+	  </collision>
+	  <visual> 
+	    <origin xyz="${width/2 + oi/2} ${-width/2} ${thickness/2-coffset+roiv}" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="${oi} ${width} ${thickness}"/> 
+	    </geometry> 
+	    <material name="wood"/>
+	  </visual>
+	  <inertial> 
+	    <origin xyz="${width/2 + oi/2} ${-width/2} ${thickness/2-coffset+roiv}" rpy="0 0 0"/>  
+	    <mass value="${oiMass}"/> 
+	    <box_inertia m="${oiMass}" x="${oi}" y="${width}" z="${thickness}"/>
+	  </inertial>
+	  <surface>
+	    <friction>
+	      <ode>
+		<mu>0.3</mu>
+		<mu2>0.3</mu2>
+	      </ode>
+	    </friction>
+	  </surface>
+	</link>
+
+	<link name="footprint" />
+
+	<joint name="base_joint" type="fixed">
+	  <parent link="footprint"/>
+	  <child link="LOIII"/>
+	</joint>
+	<joint name="f1" type="fixed">
+	  <parent link="LOIII"/>
+	  <child link="LOI"/>
+	</joint>
+	<joint name="f2" type="fixed">
+	  <parent link="LOIII"/>
+	  <child link="LOII"/>
+	</joint>
+	<joint name="f3" type="fixed">
+	  <parent link="LOIII"/>
+	  <child link="LOIV"/>
+	</joint>
+	<joint name="r1" type="revolute">
+	  <parent link="LOIV"/>
+	  <child link="LinkA"/>
+	  <origin xyz="${width/2} ${thickness} ${thickness + loiv - moffset}" rpy="0 0 0"/> 
+	  <limit lower="${((r1ll-1)/(r1ll-r1l_))*PI/2}" upper="${((0-r1ll)/(r1l_-r1ll))*PI/2}" effort="10" velocity="1"/>
+	  <axis xyz="0 1 0"/>
+	  <dynamics damping="0.2" friction="0.2"/>
+	</joint>
+	<joint name="r2" type="revolute">
+	  <parent link="LinkA"/>
+	  <child link="LinkB"/>
+	  <origin xyz="0 ${-thickness} ${link - coffset - moffset}" rpy="0 0 0"/> 
+	  <limit lower="${((r2ll-0)/(r2ll-r2l_))*PI/2}" upper="${((r2ll-1)/(r2ll-r2l_))*PI/2}" effort="10" velocity="1"/>
+	  <axis xyz="0 1 0"/>
+	  <dynamics damping="0.2" friction="0.2"/>
+	</joint>
+	<joint name="r3" type="revolute">
+	  <parent link="LinkB"/>
+	  <child link="ROIV"/>
+	  <origin xyz="0 ${thickness} ${link - coffset - moffset}" rpy="0 0 0"/> 
+	  <limit lower="${((r3ll-1)/(r3ll-r3l_))*PI/2}" upper="${((0-r3ll)/(r3l_-r3ll))*PI/2}" effort="10" velocity="1"/>
+	  <axis xyz="0 1 0"/>
+	  <dynamics damping="0.2" friction="0.2"/>
+	</joint>
+	<joint name="f4" type="fixed">
+	  <parent link="ROIV"/>
+	  <child link="ROIII"/>
+	</joint>
+	<joint name="f5" type="fixed">
+	  <parent link="ROIII"/>
+	  <child link="ROI"/>
+	</joint>
+	<joint name="f6" type="fixed">
+	  <parent link="ROIII"/>
+	  <child link="ROII"/>
+	</joint>
+
+	<transmission name="t1">
+	  <type>transmission_interface/SimpleTransmission</type>
+	  <joint name="r1">
+	    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+	  </joint>
+	  <actuator name="m1">
+	    <mechanicalReduction>1</mechanicalReduction>
+	  </actuator>
+	</transmission>
+	<transmission name="t2">
+	  <type>transmission_interface/SimpleTransmission</type>
+	  <joint name="r2">
+	    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+	  </joint>
+	  <actuator name="m2">
+	    <mechanicalReduction>1</mechanicalReduction>
+	  </actuator>
+	</transmission>
+	<transmission name="t3">
+	  <type>transmission_interface/SimpleTransmission</type>
+	  <joint name="r3">
+	    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+	  </joint>
+	  <actuator name="m3">
+	    <mechanicalReduction>1</mechanicalReduction>
+	  </actuator>
+	</transmission>
+
+</robot>
